@@ -1,0 +1,35 @@
+# laravel
+/public/client
+/public/hot
+/public/storage
+/storage/*.key
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+.env
+vendor
+/database/connections/*
+
+# Quasar
+.quasar
+.thumbs.db
+node_modules
+/dist
+/src-cordova/node_modules
+/src-cordova/platforms
+/src-cordova/plugins
+/src-cordova/www
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.vendor
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+.DS_Store
+_ide_helper.php

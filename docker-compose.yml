@@ -1,0 +1,39 @@
+version: '3.7'
+services:
+  # PHP Fast Process Manager container for the PHP application.
+  module_social_app:
+    build:
+      context: ./resources/docker/build/php-fpm
+      args:
+        - WITH_XDEBUG=false
+    tty: true
+    image: toolboxglobal/php-fpm # tag image
+    volumes:
+      - .:/var/www/html:consistent
+      - ./resources/docker/log:/var/www/html/var/log:cached
+      - ./resources/docker/log/:/srv/log:cached
+    env_file:
+      - ./resources/docker/build/php-fpm/.env
+    networks:
+      - default
+      - sharedstorage
+
+  # NGINX web server for proxying HTTP requests to the application layer.
+  module_social_web:
+    build: ./resources/docker/build/nginx
+    image: toolboxglobal/nginx # tag image
+    ports:
+      - 3000:80 #WEB_PORT
+    networks:
+      - default
+    volumes:
+      - .:/var/www/html:consistent
+      - ./resources/docker/log/nginx/:/var/log/nginx:consistent
+      - ./resources/docker/build/nginx/:/etc/nginx/conf.d:cached
+    links:
+      - module_social_app
+
+networks:
+  default:
+  sharedstorage:
+    external: true
